@@ -20,7 +20,12 @@ public class ContactService {
         return contactRepository.findAll();
     }
 
-    public Optional<Contact> getContactById(Long phoneNumber) {
-        return contactRepository.findById(phoneNumber);
+    public Contact getContactById(Long phoneNumber) {
+        return contactRepository.findById(phoneNumber).get();
+    }
+
+    public void deleteContact(Long phoneNumber) {
+        Contact contactFound = contactRepository.findById(phoneNumber).get();
+        contactRepository.delete(contactFound);
     }
 }

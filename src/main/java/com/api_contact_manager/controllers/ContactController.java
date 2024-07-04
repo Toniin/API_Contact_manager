@@ -3,10 +3,7 @@ package com.api_contact_manager.controllers;
 import com.api_contact_manager.models.Contact;
 import com.api_contact_manager.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/contacts")
@@ -15,14 +12,10 @@ public class ContactController {
     private ContactService contactService;
 
     @PostMapping(path="/add")
-    public String addContact(@RequestParam int phoneNumber, @RequestParam String name) {
+    public Contact addContact(@RequestBody Contact contact) {
+        contactService.addContact(contact);
 
-        Contact newContact = new Contact();
-        newContact.setPhoneNumber(phoneNumber);
-        newContact.setName(name);
-        contactService.addContact(newContact);
-
-        return "Contact : " + newContact.getPhoneNumber() + " is added successfully";
+        return contact;
     }
 
     @GetMapping
@@ -30,8 +23,15 @@ public class ContactController {
         return contactService.getAllContacts();
     }
 
-    @GetMapping(path="/{phoneNumber}")
-    public Optional<Contact> getContactById(@PathVariable Long phoneNumber) {
+    @GetMapping(path="/find/{phoneNumber}")
+    public Contact getContactById(@PathVariable Long phoneNumber) {
         return contactService.getContactById(phoneNumber);
+    }
+
+    @DeleteMapping(path="/delete/{phoneNumber}")
+    public String deleteContact(@PathVariable Long phoneNumber) {
+        contactService.deleteContact(phoneNumber);
+
+        return "Contact : " + phoneNumber + " is deleted successfully";
     }
 }
