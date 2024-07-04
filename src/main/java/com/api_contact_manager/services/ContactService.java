@@ -26,6 +26,14 @@ public class ContactService {
 
     public void deleteContact(Long phoneNumber) {
         Contact contactFound = contactRepository.findById(phoneNumber).get();
+
         contactRepository.delete(contactFound);
+    }
+
+    public void updateContact(Long phoneNumber, Contact updateContact) {
+        Contact contactFound = contactRepository.findById(phoneNumber).get();
+        contactFound.setName(updateContact.getName());
+
+        contactRepository.save(contactFound);
     }
 }
