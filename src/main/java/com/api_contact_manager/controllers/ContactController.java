@@ -6,15 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
-@RequestMapping(path="/contact")
+@RequestMapping(path="/contacts")
 public class ContactController {
     @Autowired
     private ContactService contactService;
 
     @PostMapping(path="/add")
-    public String addContact(@RequestParam int phoneNumber
-            , @RequestParam String name) {
+    public String addContact(@RequestParam int phoneNumber, @RequestParam String name) {
 
         Contact newContact = new Contact();
         newContact.setPhoneNumber(phoneNumber);
@@ -22,5 +23,15 @@ public class ContactController {
         contactService.addContact(newContact);
 
         return "Contact : " + newContact.getPhoneNumber() + " is added successfully";
+    }
+
+    @GetMapping
+    public Iterable<Contact> getAllContacts() {
+        return contactService.getAllContacts();
+    }
+
+    @GetMapping(path="/{phoneNumber}")
+    public Optional<Contact> getContactById(@PathVariable Long phoneNumber) {
+        return contactService.getContactById(phoneNumber);
     }
 }
