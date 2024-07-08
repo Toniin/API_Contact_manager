@@ -6,9 +6,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Data /* Annotation to auto-generate getters/setters */
 @Entity
 @Table(name = "contact")
+@Data /* Annotation to auto-generate getters/setters */
 public class Contact {
 
     @Id
