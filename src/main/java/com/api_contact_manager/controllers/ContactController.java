@@ -34,4 +34,11 @@ public class ContactController {
 
         return "Contact : " + phoneNumber + " is deleted successfully";
     }
+
+    @PutMapping(path="/update/{phoneNumber}")
+    public Contact updateContact(@PathVariable Long phoneNumber, @RequestBody Contact updateContact) {
+        contactService.updateContact(phoneNumber, updateContact);
+
+        return updateContact;
+    }
 }
