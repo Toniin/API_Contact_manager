@@ -3,11 +3,9 @@ package com.api_contact_manager.controllers;
 import com.api_contact_manager.dto.AuthenticateDTO;
 import com.api_contact_manager.models.User;
 import com.api_contact_manager.services.AuthService;
-import com.api_contact_manager.services.JwtUtils;
 import com.api_contact_manager.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +16,6 @@ public class AuthController {
     private UserService userService;
     @Autowired
     private AuthService authService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtUtils jwtUtils;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
