@@ -24,7 +24,7 @@ public class ContactController {
     }
 
     @GetMapping(path = "/find/{phoneNumber}")
-    public Contact getContactById(@PathVariable Long phoneNumber) {
+    public Contact getContactById(@PathVariable Long phoneNumber) throws Exception {
         return contactService.getContactById(phoneNumber);
     }
 

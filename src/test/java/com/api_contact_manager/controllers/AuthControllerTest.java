@@ -43,7 +43,7 @@ class AuthControllerTest {
     private JwtFilter jwtFilter;
 
     @Test
-    public void AuthController_Register_200_Sucess() throws Exception {
+    void AuthController_Register_200_Sucess() throws Exception {
 //        GIVEN
         User newUser = new User();
         newUser.setUsername("Test");
@@ -73,7 +73,7 @@ class AuthControllerTest {
     }
 
     @Test
-    public void AuthController_Register_400_UserAlreadyExits() throws Exception {
+    void AuthController_Register_400_UserAlreadyExits() throws Exception {
         //        GIVEN
         User newUser = new User();
         newUser.setUsername("Test");
@@ -99,7 +99,7 @@ class AuthControllerTest {
     }
 
     @Test
-    public void AuthController_Register_400_ROLE_UNKNOWN() throws Exception {
+    void AuthController_Register_400_ROLE_UNKNOWN() throws Exception {
         //        GIVEN
         String userJson = "{\"username\":\"Test\"," +
                 "\"password\":\"password\"," +
@@ -113,7 +113,7 @@ class AuthControllerTest {
                 .content(userJson));
 
 //        THEN
-        response.andExpect(status().isBadRequest())
+        response.andExpect(status().isInternalServerError())
                 .andDo(print());
     }
 

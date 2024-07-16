@@ -36,7 +36,7 @@ class ContactControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    void ContactController_addContact_200_Sucess() throws Exception {
+    void ContactController_AddContact_200_Sucess() throws Exception {
 //        GIVEN
         String contactJson = "{\"name\":\"Test\",\"phoneNumber\":777}";
 
@@ -57,7 +57,7 @@ class ContactControllerTest {
 
     @Test
     @WithMockUser(roles = "USER")
-    void ContactController_getAllContacts_200_Sucess() throws Exception {
+    void ContactController_GetAllContacts_200_Sucess() throws Exception {
 //        GIVEN
         Contact contact1 = new Contact();
         contact1.setName("Contact 1");
@@ -85,7 +85,7 @@ class ContactControllerTest {
 
     @Test
     @WithMockUser(roles = "USER")
-    void ContactController_getContactById_200_Sucess() throws Exception {
+    void ContactController_GetContactById_200_Sucess() throws Exception {
 //        GIVEN
         Long phoneNumber = 111L;
 
@@ -107,7 +107,7 @@ class ContactControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    void ContactController_updateContact_200_Sucess() throws Exception {
+    void ContactController_UpdateContact_200_Sucess() throws Exception {
 //        GIVEN
         String contactWithUpdateJson = "{\"name\":\"Contact updated\",\"phoneNumber\":111}";
         Long phoneNumber = 111L;
@@ -129,7 +129,7 @@ class ContactControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    void ContactController_deleteContact_200_Sucess() throws Exception {
+    void ContactController_DeleteContact_200_Sucess() throws Exception {
 //        GIVEN
         Long phoneNumber = 111L;
 
