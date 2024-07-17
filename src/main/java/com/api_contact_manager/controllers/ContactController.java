@@ -3,7 +3,6 @@ package com.api_contact_manager.controllers;
 import com.api_contact_manager.models.Contact;
 import com.api_contact_manager.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,15 +24,8 @@ public class ContactController {
     }
 
     @GetMapping(path = "/find/{phoneNumber}")
-    public Contact getContactById(@PathVariable Long phoneNumber) {
+    public Contact getContactById(@PathVariable Long phoneNumber) throws Exception {
         return contactService.getContactById(phoneNumber);
-    }
-
-    @DeleteMapping(path = "/delete/{phoneNumber}")
-    public String deleteContact(@PathVariable Long phoneNumber) {
-        contactService.deleteContact(phoneNumber);
-
-        return "Contact : " + phoneNumber + " is deleted successfully";
     }
 
     @PutMapping(path = "/update/{phoneNumber}")
@@ -41,5 +33,12 @@ public class ContactController {
         contactService.updateContact(phoneNumber, updateContact);
 
         return updateContact;
+    }
+
+    @DeleteMapping(path = "/delete/{phoneNumber}")
+    public String deleteContact(@PathVariable Long phoneNumber) {
+        contactService.deleteContact(phoneNumber);
+
+        return "Contact : " + phoneNumber + " is deleted successfully";
     }
 }
