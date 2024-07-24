@@ -10,7 +10,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/contacts/auth")
+@RequestMapping(path = "${base.url}/auth")
 public class AuthController {
     @Autowired
     private UserService userService;

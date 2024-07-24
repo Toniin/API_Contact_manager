@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api/contacts")
+@RequestMapping(path = "${base.url}")
 public class ContactController {
     @Autowired
     private ContactService contactService;
