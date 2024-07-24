@@ -1,6 +1,7 @@
 package com.api_contact_manager.configuration;
 
 import com.api_contact_manager.filters.JwtFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static com.api_contact_manager.models.Permission.*;
 import static org.springframework.http.HttpMethod.POST;
@@ -21,20 +24,25 @@ import static org.springframework.http.HttpMethod.POST;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private static final String contactsPath = "/api/contacts";
+    @Value("${allowed.origin}")
+    private String allowedOrigin;
+
+    @Value("${base.url}")
+    private String baseUrl;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(contactsPath + "/auth/register", contactsPath + "/auth/login").permitAll()
-                                .requestMatchers(POST, contactsPath + "/add").hasAuthority(ADMIN_CREATE.getPermission())
-                                .requestMatchers(contactsPath).hasAnyRole("ADMIN", "USER")
-                                .requestMatchers(contactsPath+"/find/{phoneNumber}").hasAnyRole("ADMIN", "USER")
-                                .requestMatchers(contactsPath+"/update/{phoneNumber}").hasAuthority(ADMIN_UPDATE.getPermission())
-                                .requestMatchers(contactsPath+"/delete/{phoneNumber}").hasAuthority(ADMIN_DELETE.getPermission())
-                                .anyRequest().denyAll())
+                        auth.requestMatchers(baseUrl + "/auth/register", baseUrl + "/auth/login").permitAll()
+//                                .requestMatchers(POST, baseUrl + "/add").hasAuthority(ADMIN_CREATE.getPermission())
+//                                .requestMatchers(baseUrl).hasAnyRole("ADMIN", "USER")
+//                                .requestMatchers(baseUrl+"/find/{phoneNumber}").hasAnyRole("ADMIN", "USER")
+//                                .requestMatchers(baseUrl+"/update/{phoneNumber}").hasAuthority(ADMIN_UPDATE.getPermission())
+//                                .requestMatchers(baseUrl+"/delete/{phoneNumber}").hasAuthority(ADMIN_DELETE.getPermission())
+//                                .anyRequest().denyAll())
+                                .anyRequest().permitAll())
                 .sessionManagement(httpSecuritySessionManagementConfigurer ->
                         httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
@@ -48,5 +56,18 @@ public class SecurityConfig {
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
 
         return authenticationManagerBuilder.build();
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping(baseUrl + "/**")
+                        .allowedOrigins(allowedOrigin)
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedHeaders("*");
+            }
+        };
     }
 }
