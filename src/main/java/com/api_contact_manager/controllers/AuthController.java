@@ -23,8 +23,12 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
         if (userService.isUserExists(user.getUsername())) {
-            String errorJson = "{\"isExists\":true," +
-                    "\"message\":\"Username already exists\"}";
+            String errorJson = """
+                    {
+                        "isExists": true,
+                        "message":"Username already exists"
+                    }
+                    """;
 
             return ResponseEntity.badRequest().body(errorJson);
         } else {
