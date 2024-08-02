@@ -4,10 +4,14 @@ import com.api_contact_manager.dto.AuthenticateDTO;
 import com.api_contact_manager.models.User;
 import com.api_contact_manager.services.AuthService;
 import com.api_contact_manager.services.UserService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "${base.url}/auth")
@@ -20,7 +24,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
         if (userService.isUserExists(user.getUsername())) {
-            return ResponseEntity.badRequest().body("Username already exists");
+            String errorJson = "{\"isExists\":true," +
+                    "\"message\":\"Username already exists\"}";
+
+            return ResponseEntity.badRequest().body(errorJson);
         } else {
             return ResponseEntity.ok(userService.createUser(user));
         }
