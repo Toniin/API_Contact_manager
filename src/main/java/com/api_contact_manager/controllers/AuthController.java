@@ -25,14 +25,17 @@ public class AuthController {
         if (userService.isUserExists(user.getUsername())) {
             String errorJson = """
                     {
-                        "isExists": true,
+                        "isError": true,
                         "message":"Username already exists"
                     }
                     """;
 
-            return ResponseEntity.badRequest().body(errorJson);
+            return ResponseEntity
+                    .badRequest()
+                    .body(errorJson);
         } else {
-            return ResponseEntity.ok(userService.createUser(user));
+            return ResponseEntity
+                    .ok(userService.createUser(user));
         }
     }
 
@@ -41,7 +44,14 @@ public class AuthController {
         try {
             return ResponseEntity.ok(authService.authenticateUser(authenticateDTO));
         } catch (BadCredentialsException e) {
-            return ResponseEntity.badRequest().body("Invalid username or password");
+            String errorJson = """
+                    {
+                        "isError": true,
+                        "message":"Invalid username or password"
+                    }
+                    """;
+
+            return ResponseEntity.badRequest().body(errorJson);
         }
     }
 }

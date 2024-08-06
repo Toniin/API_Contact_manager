@@ -53,9 +53,13 @@ class AuthControllerTest {
         when(userServiceMock.isUserExists(newUser.getUsername())).thenReturn(false);
         when(userServiceMock.createUser(newUser)).thenReturn(newUser);
 
-        String userJson = "{\"username\":\"Test\"," +
-                "\"password\":\"password\"," +
-                "\"role\":\"USER\"}";
+        String userJson = """
+                {
+                    "username": "Test",
+                    "password":"password",
+                    "role":"USER"
+                }
+                """;
 
 //        WHEN
         ResultActions response = mockMvc.perform(post("/api/contacts/auth/register")
@@ -82,9 +86,13 @@ class AuthControllerTest {
 
         when(userServiceMock.isUserExists(newUser.getUsername())).thenReturn(true);
 
-        String userJson = "{\"username\":\"Test\"," +
-                "\"password\":\"password\"," +
-                "\"role\":\"USER\"}";
+        String userJson = """
+                {
+                    "username": "Test",
+                    "password":"password",
+                    "role":"USER"
+                }
+                """;
 
 //        WHEN
         ResultActions response = mockMvc.perform(post("/api/contacts/auth/register")
@@ -95,15 +103,21 @@ class AuthControllerTest {
 
 //        THEN
         response.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.isError").value(true))
+                .andExpect(jsonPath("$.message").value("Username already exists"))
                 .andDo(print());
     }
 
     @Test
     void AuthController_Register_400_ROLE_UNKNOWN() throws Exception {
         //        GIVEN
-        String userJson = "{\"username\":\"Test\"," +
-                "\"password\":\"password\"," +
-                "\"role\":\"ROLE_UNKNOWN\"}";
+        String userJson = """
+                {
+                    "username": "Test",
+                    "password":"password",
+                    "role":"ROLE_UNKNOWN"
+                }
+                """;
 
 //        WHEN
         ResultActions response = mockMvc.perform(post("/api/contacts/auth/register")
@@ -158,7 +172,8 @@ class AuthControllerTest {
 
 //        THEN
         response.andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$").value("Invalid username or password"))
+                .andExpect(jsonPath("$.isError").value(true))
+                .andExpect(jsonPath("$.message").value("Invalid username or password"))
                 .andDo(print());
     }
 }

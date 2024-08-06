@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -38,7 +39,12 @@ class ContactControllerTest {
     @WithMockUser(roles = "ADMIN")
     void ContactController_AddContact_200_Sucess() throws Exception {
 //        GIVEN
-        String contactJson = "{\"name\":\"Test\",\"phoneNumber\":777}";
+        String contactJson = """
+                {
+                    "name": "Test",
+                    "phoneNumber": 777
+                }
+                """;
 
 //        WHEN
         ResultActions response = mockMvc.perform(post("/api/contacts/add")
@@ -50,8 +56,7 @@ class ContactControllerTest {
 
 //        THEN
         response.andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Test"))
-                .andExpect(jsonPath("$.phoneNumber").value("777"))
+                .andExpect(jsonPath("$.message").value("Contact added successfully"))
                 .andDo(print());
     }
 
@@ -106,11 +111,38 @@ class ContactControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
+    void ContactController_GetContactById_400_ContactNotFound() throws Exception {
+//        GIVEN
+        Long phoneNumber = 111L;
+
+        Contact contact1 = new Contact();
+        contact1.setName("Contact 1");
+        contact1.setPhoneNumber(phoneNumber);
+
+        when(contactServiceMock.getContactById(phoneNumber)).thenThrow(BadCredentialsException.class);
+
+//        WHEN
+        ResultActions response = mockMvc.perform(get("/api/contacts/find/{phoneNumber}", phoneNumber));
+
+//        THEN
+        response.andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.isError").value(true))
+                .andExpect(jsonPath("$.message").value("Contact not found"))
+                .andDo(print());
+    }
+
+    @Test
     @WithMockUser(roles = "ADMIN")
     void ContactController_UpdateContact_200_Sucess() throws Exception {
 //        GIVEN
-        String contactWithUpdateJson = "{\"name\":\"Contact updated\",\"phoneNumber\":111}";
         Long phoneNumber = 111L;
+
+        String responseJson = """
+                {
+                    "message": "Contact renamed successfully"
+                }
+                """;
 
 //        WHEN
         ResultActions response = mockMvc.perform(put("/api/contacts/update/{phoneNumber}", phoneNumber)
@@ -118,12 +150,11 @@ class ContactControllerTest {
                 .characterEncoding("utf-8")
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
-                .content(contactWithUpdateJson));
+                .content(responseJson));
 
 //        THEN
         response.andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Contact updated"))
-                .andExpect(jsonPath("$.phoneNumber").value(phoneNumber))
+                .andExpect(jsonPath("$.message").value("Contact renamed successfully"))
                 .andDo(print());
     }
 
@@ -139,7 +170,7 @@ class ContactControllerTest {
 
 //        THEN
         response.andExpect(status().isOk())
-                .andExpect(jsonPath("$").value("Contact : " + phoneNumber + " is deleted successfully"))
+                .andExpect(jsonPath("$.message").value("Contact deleted successfully"))
                 .andDo(print());
     }
 }

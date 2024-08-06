@@ -3,6 +3,7 @@ package com.api_contact_manager.controllers;
 import com.api_contact_manager.models.Contact;
 import com.api_contact_manager.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,10 +13,17 @@ public class ContactController {
     private ContactService contactService;
 
     @PostMapping(path = "/add")
-    public Contact addContact(@RequestBody Contact contact) {
+    public ResponseEntity<?> addContact(@RequestBody Contact contact) {
         contactService.addContact(contact);
 
-        return contact;
+        String responseJson = """
+                {
+                    "message": "Contact added successfully"
+                }
+                """;
+
+        return ResponseEntity
+                .ok(responseJson);
     }
 
     @GetMapping
@@ -24,21 +32,44 @@ public class ContactController {
     }
 
     @GetMapping(path = "/find/{phoneNumber}")
-    public Contact getContactById(@PathVariable Long phoneNumber) throws Exception {
-        return contactService.getContactById(phoneNumber);
+    public ResponseEntity<?> getContactById(@PathVariable Long phoneNumber) {
+        try {
+            return ResponseEntity.ok(contactService.getContactById(phoneNumber));
+        } catch (Exception e) {
+            String errorJson = """
+                    {
+                        "isError": true,
+                        "message":"Contact not found"
+                    }
+                    """;
+            return ResponseEntity.badRequest().body(errorJson);
+        }
     }
 
     @PutMapping(path = "/update/{phoneNumber}")
-    public Contact updateContact(@PathVariable Long phoneNumber, @RequestBody Contact updateContact) {
+    public ResponseEntity<?> updateContact(@PathVariable Long phoneNumber, @RequestBody Contact updateContact) {
         contactService.updateContact(phoneNumber, updateContact);
+        String responseJson = """
+                {
+                    "message": "Contact renamed successfully"
+                }
+                """;
 
-        return updateContact;
+        return ResponseEntity
+                .ok(responseJson);
     }
 
     @DeleteMapping(path = "/delete/{phoneNumber}")
-    public String deleteContact(@PathVariable Long phoneNumber) {
+    public ResponseEntity<?> deleteContact(@PathVariable Long phoneNumber) {
         contactService.deleteContact(phoneNumber);
 
-        return "Contact : " + phoneNumber + " is deleted successfully";
+        String responseJson = """
+                {
+                    "message": "Contact deleted successfully"
+                }
+                """;
+
+        return ResponseEntity
+                .ok(responseJson);
     }
 }
