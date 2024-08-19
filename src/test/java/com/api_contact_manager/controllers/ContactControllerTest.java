@@ -66,11 +66,11 @@ class ContactControllerTest {
 //        GIVEN
         Contact contact1 = new Contact();
         contact1.setName("Contact 1");
-        contact1.setPhoneNumber(111L);
+        contact1.setPhoneNumber("(+33)1 23 45 67 89");
 
         Contact contact2 = new Contact();
         contact2.setName("Contact 2");
-        contact2.setPhoneNumber(222L);
+        contact2.setPhoneNumber("(+33)2 34 56 78 91");
 
         List<Contact> contacts = List.of(contact1, contact2);
 
@@ -81,9 +81,9 @@ class ContactControllerTest {
 
 //        THEN
         response.andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].phoneNumber").value("111"))
+                .andExpect(jsonPath("$[0].phoneNumber").value("(+33)1 23 45 67 89"))
                 .andExpect(jsonPath("$[0].name").value("Contact 1"))
-                .andExpect(jsonPath("$[1].phoneNumber").value("222"))
+                .andExpect(jsonPath("$[1].phoneNumber").value("(+33)2 34 56 78 91"))
                 .andExpect(jsonPath("$[1].name").value("Contact 2"))
                 .andDo(print());
     }
@@ -92,7 +92,7 @@ class ContactControllerTest {
     @WithMockUser(roles = "USER")
     void ContactController_GetContactById_200_Sucess() throws Exception {
 //        GIVEN
-        Long phoneNumber = 111L;
+        String phoneNumber = "(+33)1 23 45 67 89";
 
         Contact contact1 = new Contact();
         contact1.setName("Contact 1");
@@ -114,7 +114,7 @@ class ContactControllerTest {
     @WithMockUser(roles = "USER")
     void ContactController_GetContactById_400_ContactNotFound() throws Exception {
 //        GIVEN
-        Long phoneNumber = 111L;
+        String phoneNumber = "(+33)1 23 45 67 89";
 
         Contact contact1 = new Contact();
         contact1.setName("Contact 1");

@@ -32,7 +32,7 @@ public class ContactController {
     }
 
     @GetMapping(path = "/find/{phoneNumber}")
-    public ResponseEntity<?> getContactById(@PathVariable Long phoneNumber) {
+    public ResponseEntity<?> getContactById(@PathVariable String phoneNumber) {
         try {
             return ResponseEntity.ok(contactService.getContactById(phoneNumber));
         } catch (Exception e) {
@@ -47,7 +47,7 @@ public class ContactController {
     }
 
     @PutMapping(path = "/update/{phoneNumber}")
-    public ResponseEntity<?> updateContact(@PathVariable Long phoneNumber, @RequestBody Contact updateContact) {
+    public ResponseEntity<?> updateContact(@PathVariable String phoneNumber, @RequestBody Contact updateContact) {
         contactService.updateContact(phoneNumber, updateContact);
         String responseJson = """
                 {
@@ -60,7 +60,7 @@ public class ContactController {
     }
 
     @DeleteMapping(path = "/delete/{phoneNumber}")
-    public ResponseEntity<?> deleteContact(@PathVariable Long phoneNumber) {
+    public ResponseEntity<?> deleteContact(@PathVariable String phoneNumber) {
         contactService.deleteContact(phoneNumber);
 
         String responseJson = """

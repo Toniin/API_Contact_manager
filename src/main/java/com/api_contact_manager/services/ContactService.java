@@ -18,17 +18,17 @@ public class ContactService {
         return contactRepository.findAll();
     }
 
-    public Contact getContactById(Long phoneNumber) {
+    public Contact getContactById(String phoneNumber) {
         return contactRepository.findById(phoneNumber).get();
     }
 
-    public void deleteContact(Long phoneNumber) {
+    public void deleteContact(String phoneNumber) {
         Contact contactFound = contactRepository.findById(phoneNumber).get();
 
         contactRepository.delete(contactFound);
     }
 
-    public void updateContact(Long phoneNumber, Contact updateContact) {
+    public void updateContact(String phoneNumber, Contact updateContact) {
         Contact contactFound = contactRepository.findById(phoneNumber).get();
         contactFound.setName(updateContact.getName());
 

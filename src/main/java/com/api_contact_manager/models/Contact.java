@@ -13,7 +13,7 @@ public class Contact {
 
     @Id
     @Column(name="phone_number")
-    private Long phoneNumber;
+    private String phoneNumber;
     @Column(name="name")
     private String name;
 }
