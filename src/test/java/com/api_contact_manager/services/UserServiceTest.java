@@ -3,6 +3,7 @@ package com.api_contact_manager.services;
 import com.api_contact_manager.controllers.ContactController;
 import com.api_contact_manager.models.User;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(UserService.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class UserServiceTest {
     @MockBean
     private PasswordEncoder passwordEncoderMock;
