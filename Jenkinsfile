@@ -34,24 +34,24 @@ pipeline {
             }
         }
 
-        stage('Deploy our image') {
-            steps{
-                script {
-                    docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
-                        sh "docker tag ${NAME} ${NAME}:${VERSION}"
-
-                        sh 'docker push ${NAME}:latest'
-                        sh 'docker push ${NAME}:${VERSION}'
-                    }
-                }
-            }
-        }
-
-        stage('Cleaning up') {
-            steps{
-                sh "docker rmi ${NAME}:latest"
-                sh "docker rmi ${NAME}:${VERSION}"
-            }
-        }
+//         stage('Deploy our image') {
+//             steps{
+//                 script {
+//                     docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
+//                         sh "docker tag ${NAME} ${NAME}:${VERSION}"
+//
+//                         sh 'docker push ${NAME}:latest'
+//                         sh 'docker push ${NAME}:${VERSION}'
+//                     }
+//                 }
+//             }
+//         }
+//
+//         stage('Cleaning up') {
+//             steps{
+//                 sh "docker rmi ${NAME}:latest"
+//                 sh "docker rmi ${NAME}:${VERSION}"
+//             }
+//         }
     }
 }
