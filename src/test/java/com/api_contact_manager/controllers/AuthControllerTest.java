@@ -18,9 +18,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.Map;
 
 import static com.api_contact_manager.models.Role.USER;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.matches;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,7 +35,7 @@ class AuthControllerTest {
     @MockBean
     private UserService userServiceMock;
     @MockBean
-    private AuthService authService;
+    private AuthService authServiceMock;
     @MockBean
     private JwtFilter jwtFilter;
 
@@ -136,7 +133,7 @@ class AuthControllerTest {
 //        GIVEN
         AuthenticateDTO authenticateDTO = new AuthenticateDTO("Test", "password");
 
-        when(authService.authenticateUser(authenticateDTO)).thenReturn(Map.of("username", authenticateDTO.username(), "token", "Bearer token"));
+        when(authServiceMock.authenticateUser(authenticateDTO)).thenReturn(Map.of("username", authenticateDTO.username(), "token", "Bearer token"));
 
         String bodyRequest = objectMapper.writeValueAsString(authenticateDTO);
 
@@ -159,7 +156,7 @@ class AuthControllerTest {
 //        GIVEN
         AuthenticateDTO authenticateDTO = new AuthenticateDTO("Test", "password");
 
-        when(authService.authenticateUser(authenticateDTO)).thenThrow(BadCredentialsException.class);
+        when(authServiceMock.authenticateUser(authenticateDTO)).thenThrow(BadCredentialsException.class);
 
         String bodyRequest = objectMapper.writeValueAsString(authenticateDTO);
 
