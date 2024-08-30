@@ -12,8 +12,7 @@ import static com.api_contact_manager.models.Role.USER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-//@WebMvcTest(UserService.class)
-@SpringBootTest
+@WebMvcTest(UserService.class)
 public class UserServiceTest {
     @MockBean
     private PasswordEncoder passwordEncoderMock;
