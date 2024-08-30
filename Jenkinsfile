@@ -6,6 +6,10 @@ pipeline {
         GIT_REPO = 'https://github.com/Toniin/API_Contact_manager.git'
     }
 
+    tools {
+        maven 'Maven 3.9.9'
+    }
+
     agent any
 
     stages {
@@ -13,6 +17,14 @@ pipeline {
             steps {
                 git branch: 'main',
                     url: GIT_REPO
+            }
+        }
+
+        stage('Create java archive') {
+            steps{
+                withMaven {
+                    sh "mvn clean package"
+                }
             }
         }
 
