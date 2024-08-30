@@ -23,11 +23,11 @@ public class UserServiceTest {
         user.setPassword("password");
         user.setRole(USER);
 
-////        WHEN
+//        WHEN
         when(passwordEncoderMock.encode(user.getPassword())).thenReturn("passwordEncoded");
         user.setPassword(passwordEncoderMock.encode(user.getPassword()));
 
-////        THEN
+//        THEN
         assertEquals(user.getUsername(), "Test");
         assertEquals(user.getPassword(), "passwordEncoded");
 
