@@ -34,7 +34,7 @@ openssl rand -base64 32
 ## Build and run the app using maven
 
 ```bash
-./mvnw package
+./mvnw clean package
 java -jar target/API_Contact_manager-0.0.1-SNAPSHOT.jar
 ```
 
