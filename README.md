@@ -5,6 +5,8 @@ API REST with :
 - JPA
 - Hibernate
 
+Docker image of the project : <a href="https://hub.docker.com/r/toniin/api-contact-manager" target="_blank">toniin/api-contact-manager</a>
+
 ## Clone the application
 
 ```bash
