@@ -22,6 +22,9 @@ pipeline {
 
         stage('Create java archive') {
             steps{
+                script {
+                sh "rm src/main/java/com/api_contact_manager/configuration/AppConfig.java"
+                }
                 withMaven {
                     sh "mvn clean package"
                 }
