@@ -16,9 +16,9 @@ import java.util.function.Function;
 
 @Service
 public class JwtUtils {
-    @Value("${app.jwt-secret-key}")
+    @Value("${JWT_SECRET_KEY}")
     private String jwtSecretKey;
-    @Value("${app.jwt-expiration-time}")
+    @Value("${JWT_EXPIRATION_TIME}")
     private String jwtExpirationTime;
 
     @Autowired

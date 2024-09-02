@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -23,7 +22,7 @@ import static org.springframework.http.HttpMethod.POST;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Value("${allowed.origins}")
+    @Value("${ALLOWED_ORIGINS}")
     private String[] allowedOrigins;
 
     @Value("${base.url}")
@@ -49,9 +48,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http, UserDetailsService userDetailsService, WebConfig webConfig) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(webConfig.passwordEncoder());
 
         return authenticationManagerBuilder.build();
     }
