@@ -14,7 +14,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
-//    @Mock
     @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private WebConfig webConfigMock;
 
