@@ -8,7 +8,7 @@ API REST with :
 ## Clone the application
 
 ```bash
-https://github.com/Toniin/API_Contact_manager.git
+git clone https://github.com/Toniin/API_Contact_manager.git
 ```
 
 ## Put your environment variables (.env)
