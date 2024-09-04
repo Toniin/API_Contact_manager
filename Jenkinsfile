@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Cloning our Git') {
             steps {
-                git branch: 'main',
+                git branch: 'tags/v1.0-sql',
                     url: GIT_REPO
             }
         }
