@@ -1,9 +1,9 @@
 # API Contact manager
 API REST with :
 - Spring Boot
-- Mysql database
-- JPA
-- Hibernate
+- MongoDB database
+
+Docker image of the project : <a href="https://hub.docker.com/r/toniin/api-contact-manager" target="_blank">toniin/api-contact-manager</a>
 
 ## Clone the application
 
@@ -15,9 +15,11 @@ git clone https://github.com/Toniin/API_Contact_manager.git
 
 - **ALLOWED_ORIGINS**: List of url(s) application allowed to communicate with the API
 
-- **DATABASE_URL**: Url/Ip adress of the mysql database | name of the mysql container
+- **DATABASE_URL**: Url/Ip adress of the mongodb database | name of the mongodb container
 
-- **MYSQL_DATABASE**: Name of the database where data is store
+- **DATABASE_PORT**: Port of the mongodb database
+
+- **MONGODB_DATABASE**: Name of the database where data is store
 
 - **DATABASE_USERNAME**: Username to connect to database
 
@@ -34,7 +36,7 @@ openssl rand -base64 32
 ## Build and run the app using maven
 
 ```bash
-./mvnw package
+./mvnw clean package
 java -jar target/API_Contact_manager-0.0.1-SNAPSHOT.jar
 ```
 

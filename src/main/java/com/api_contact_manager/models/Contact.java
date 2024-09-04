@@ -1,19 +1,17 @@
 package com.api_contact_manager.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "contact")
+@Document(collection = "contacts")
 @Data /* Annotation to auto-generate getters/setters */
 public class Contact {
 
     @Id
-    @Column(name="phone_number")
     private String phoneNumber;
-    @Column(name="name")
+
+    @Indexed(unique = true)
     private String name;
 }
