@@ -2,7 +2,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = 'dockerhub_credentials'
         NAME = "toniin/api-contact-manager"
-        VERSION = "${env.BUILD_ID}.0.0-sql"
+        VERSION = "${env.BUILD_ID}.0.0-mysql"
         GIT_REPO = 'https://github.com/Toniin/API_Contact_manager.git'
     }
 
@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Cloning our Git') {
             steps {
-                git branch: 'tags/v1.0-sql',
+                git branch: 'mysql',
                     url: GIT_REPO
             }
         }
