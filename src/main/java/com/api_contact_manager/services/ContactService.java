@@ -2,12 +2,12 @@ package com.api_contact_manager.services;
 
 import com.api_contact_manager.models.Contact;
 import com.api_contact_manager.repositories.ContactRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ContactService {
-    @Autowired
     private ContactRepository contactRepository;
 
     public void addContact(Contact newContact) {

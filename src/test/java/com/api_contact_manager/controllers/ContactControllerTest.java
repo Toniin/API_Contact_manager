@@ -73,6 +73,8 @@ class ContactControllerTest {
 
         List<Contact> contacts = List.of(contact1, contact2);
 
+        // ⚠️ Mocker le contactRepository.findAll(); plutôt que le contactService entier
+        // Appeler le vrai contactService avec sa méthode getAllContacts et vérifier que le résultat soit celui attendu
         when(contactServiceMock.getAllContacts()).thenReturn(contacts);
 
 //        WHEN
