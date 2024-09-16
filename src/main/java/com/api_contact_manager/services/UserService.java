@@ -3,17 +3,16 @@ package com.api_contact_manager.services;
 import com.api_contact_manager.configuration.WebConfig;
 import com.api_contact_manager.models.User;
 import com.api_contact_manager.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UserService implements UserDetailsService {
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private WebConfig webConfig;
 
     public boolean isUserExists(String username) {

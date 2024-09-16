@@ -4,7 +4,7 @@ import com.api_contact_manager.dto.AuthenticateDTO;
 import com.api_contact_manager.models.User;
 import com.api_contact_manager.services.AuthService;
 import com.api_contact_manager.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "${base.url}/auth")
+@AllArgsConstructor
 public class AuthController {
-    @Autowired
     private UserService userService;
-    @Autowired
     private AuthService authService;
 
     @PostMapping("/register")
