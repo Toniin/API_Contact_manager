@@ -27,7 +27,10 @@ public class UserServiceTest {
 
 //        WHEN
         when(webConfigMock.passwordEncoder().encode(user.getPassword())).thenReturn("passwordEncoded");
+
+        // ⚠️ Tester le retour de UserService.createUser => username + password hasher
         user.setPassword(webConfigMock.passwordEncoder().encode(user.getPassword()));
+
 
 //        THEN
         assertEquals(user.getUsername(), "Test");

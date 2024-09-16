@@ -2,14 +2,14 @@ package com.api_contact_manager.controllers;
 
 import com.api_contact_manager.models.Contact;
 import com.api_contact_manager.services.ContactService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "${base.url}")
+@AllArgsConstructor
 public class ContactController {
-    @Autowired
     private ContactService contactService;
 
     @PostMapping(path = "/add")
